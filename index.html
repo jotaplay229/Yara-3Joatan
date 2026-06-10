@@ -646,7 +646,7 @@ section{
   cursor:pointer;
   display:none;
 }
-#screen-letter.reveal .next-floating{display:block}
+#screen-letter.reveal .next-floating{display:none}
 .chapter-pill{
   width:max-content;
   max-width:100%;
@@ -844,8 +844,6 @@ section{
 
 <div id="screen-letter">
   <div class="top-progress" aria-hidden="true"><span id="progress-bar"></span></div>
-  <button class="next-floating" type="button" onclick="goNextSection()">Continuar ♥</button>
-
   <section class="hero guide-section" id="capitulo-1">
     <div class="section-inner">
       <div class="section-glow"></div>
@@ -1145,7 +1143,7 @@ function updateProgress(){
   const letter = document.getElementById('screen-letter');
   if(btn && letter && letter.classList.contains('reveal')){
     const nearEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 140;
-    btn.style.display = nearEnd ? 'none' : 'block';
+    btn.style.display = 'none';
   }
 }
 
