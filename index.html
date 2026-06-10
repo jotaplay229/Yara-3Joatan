@@ -607,6 +607,198 @@ section{
   }
 }
 
+
+/* Experiência guiada e intuitiva estilo presente digital */
+.top-progress{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:4px;
+  z-index:80;
+  background:rgba(255,255,255,.04);
+  display:none;
+}
+#screen-letter.reveal .top-progress{display:block}
+#progress-bar{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, var(--rose-2), var(--rose-3), var(--gold));
+  box-shadow:0 0 16px rgba(255,95,115,.55);
+  transition:width .12s linear;
+}
+.next-floating{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:70;
+  border:1px solid rgba(255,120,120,.26);
+  background:linear-gradient(135deg, rgba(217,65,54,.92), rgba(255,95,115,.76));
+  color:#fff;
+  border-radius:999px;
+  padding:.9rem 1.15rem;
+  font-family:'Cormorant Garamond', serif;
+  font-size:1rem;
+  letter-spacing:.08em;
+  box-shadow:0 14px 36px rgba(0,0,0,.32), 0 0 24px rgba(255,95,115,.18);
+  backdrop-filter:blur(8px);
+  cursor:pointer;
+  display:none;
+}
+#screen-letter.reveal .next-floating{display:block}
+.chapter-pill{
+  width:max-content;
+  max-width:100%;
+  margin:0 auto 1rem;
+  padding:.55rem .9rem;
+  border-radius:999px;
+  border:1px solid rgba(216,173,98,.20);
+  background:rgba(12,9,10,.42);
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:.28em;
+  font-size:.72rem;
+}
+.primary-action{
+  margin:1.7rem auto .6rem;
+  border:1px solid rgba(255,120,120,.34);
+  background:linear-gradient(135deg, rgba(217,65,54,.96), rgba(255,95,115,.78));
+  color:#fff;
+  border-radius:999px;
+  padding:1rem 1.45rem;
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.08rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  box-shadow:0 20px 54px rgba(0,0,0,.32),0 0 32px rgba(255,95,115,.22);
+  cursor:pointer;
+  animation:softPulse 1.9s ease-in-out infinite;
+}
+.memory-section{
+  padding-top:3.8rem;
+}
+.memory-card{
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:.86fr 1fr;
+  gap:0;
+}
+.memory-photo{
+  position:relative;
+  min-height:650px;
+  overflow:hidden;
+  border-radius:28px 0 0 28px;
+  background:#08080a;
+}
+.memory-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  display:block;
+  filter:saturate(1.04) contrast(1.04);
+}
+.memory-photo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(0deg, rgba(0,0,0,.24), transparent 42%), radial-gradient(circle at 50% 40%, transparent 35%, rgba(0,0,0,.12));
+  pointer-events:none;
+}
+.photo-shine{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.16) 46%, transparent 60%);
+  transform:translateX(-120%);
+  animation:shineMove 4.8s ease-in-out infinite;
+  pointer-events:none;
+}
+.memory-caption{
+  padding:2.4rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.memory-caption h3{
+  font-family:'Playfair Display', serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  line-height:1.08;
+  margin-bottom:1rem;
+}
+.memory-caption p:last-child{
+  color:var(--muted);
+  line-height:1.85;
+  font-size:1.2rem;
+}
+.full-letter{
+  max-width:940px;
+  margin:0 auto 2rem;
+  text-align:left;
+}
+.timeline-box{
+  max-width:1100px;
+  margin-left:auto;
+  margin-right:auto;
+}
+@keyframes softPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.035)}
+}
+@keyframes shineMove{
+  0%,45%{transform:translateX(-120%)}
+  75%,100%{transform:translateX(120%)}
+}
+
+@media (max-width: 900px){
+  .memory-card{grid-template-columns:1fr}
+  .memory-photo{
+    min-height:520px;
+    border-radius:24px 24px 0 0;
+  }
+  .memory-caption{padding:1.8rem 1.35rem 2rem}
+  .next-floating{
+    right:50%;
+    transform:translateX(50%);
+    bottom:14px;
+    padding:.8rem 1rem;
+    font-size:.92rem;
+  }
+  .guide-section{scroll-margin-top:20px}
+}
+@media (max-width: 560px){
+  .chapter-pill{
+    font-size:.62rem;
+    letter-spacing:.22em;
+    padding:.48rem .72rem;
+  }
+  .primary-action{
+    width:min(92vw,360px);
+    padding:.95rem 1rem;
+    font-size:.92rem;
+  }
+  .next-floating{
+    width:min(88vw,320px);
+    justify-content:center;
+    text-align:center;
+    bottom:12px;
+  }
+  .memory-section{padding-top:2.6rem}
+  .memory-photo{
+    min-height:560px;
+    max-height:72svh;
+  }
+  .memory-caption h3{
+    font-size:2rem;
+  }
+  .memory-caption p:last-child{
+    font-size:1.06rem;
+  }
+  .full-letter{
+    padding:1.5rem 1.2rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce){
   *{transition:none !important; scroll-behavior:auto !important}
   .intro-date,.intro-title,.intro-sub,.sparkles,.heart-launch,.hero-badge,.hero-title,.hero-text,.scroll-tag,.reveal-on-scroll,.card{
@@ -651,45 +843,60 @@ section{
 </div>
 
 <div id="screen-letter">
-  <section class="hero">
+  <div class="top-progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  <button class="next-floating" type="button" onclick="goNextSection()">Continuar ♥</button>
+
+  <section class="hero guide-section" id="capitulo-1">
     <div class="section-inner">
       <div class="section-glow"></div>
-      <div class="hero-badge">♥ Dia dos Namorados</div>
+      <div class="hero-badge">♥ Presente digital para Yara</div>
+      <p class="chapter-pill">Capítulo 1 de 5</p>
       <h2 class="hero-title">Você é o <em>amor da minha vida</em></h2>
-      <p class="hero-text">Entre tantas pessoas no mundo, foi em você que meu coração encontrou paz. E quanto mais eu te conheço, mais eu tenho certeza de que você é uma das coisas mais bonitas que já aconteceu na minha vida.</p>
-      <div class="scroll-tag">Role para ver mais</div>
+      <p class="hero-text">Eu fiz esse cantinho para você sentir, mesmo pela tela do celular, o quanto é especial pra mim. Cada parte daqui tem um pedacinho do que eu sinto por você.</p>
+      <button class="primary-action" type="button" onclick="goNextSection()">Começar a surpresa</button>
+      <div class="scroll-tag">toque ou role para continuar</div>
     </div>
   </section>
 
-  <section>
+  <section class="memory-section guide-section" id="capitulo-2">
     <div class="section-inner reveal-on-scroll">
-      <div class="story-layout">
-        <div class="photo-box glass">
-          <div class="photo-frame fixed-photo">
-            <img id="photo-img" src="assets/nossa-foto.png" alt="Nossa foto" />
-          </div>
+      <p class="chapter-pill">Capítulo 2 de 5</p>
+      <div class="memory-card glass">
+        <div class="memory-photo">
+          <img src="assets/nossa-foto.png" alt="Nossa foto juntos" />
+          <div class="photo-shine"></div>
         </div>
-
-        <div class="text-box glass">
-          <p class="kicker">Nossa história</p>
-          <h3 class="side-title">Cada detalhe seu <em>faz eu te amar ainda mais</em>.</h3>
-          <p class="side-text">Tem pessoas que chegam na nossa vida de um jeito simples, mas acabam mudando tudo por dentro. Você foi assim comigo. Chegou com seu jeito leve, bonito e verdadeiro, e sem perceber foi ficando no meu pensamento, no meu sorriso, nas minhas vontades e principalmente no meu coração.</p>
-          <p class="small-note">Esse cantinho é só uma forma simples de te lembrar o quanto você é especial pra mim e o quanto eu sou feliz por ter você na minha vida.</p>
+        <div class="memory-caption">
+          <p class="kicker">Nossa foto</p>
+          <h3>Esse momento é simples, mas significa muito pra mim.</h3>
+          <p>Porque quando olho para nós dois, eu lembro do quanto sua presença me faz bem. Você tem um jeito único de deixar tudo mais leve, mais bonito e mais verdadeiro.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="cards-wrap glass">
+  <section class="guide-section" id="capitulo-3">
+    <div class="section-inner reveal-on-scroll">
+      <p class="chapter-pill">Capítulo 3 de 5</p>
+      <div class="text-box glass full-letter">
+        <p class="kicker">Nossa história</p>
+        <h3 class="side-title">Cada detalhe seu <em>faz eu te amar ainda mais</em>.</h3>
+        <p class="side-text">Tem pessoas que chegam na nossa vida de um jeito simples, mas acabam mudando tudo por dentro. Você foi assim comigo. Chegou com seu jeito leve, bonito e verdadeiro, e sem perceber foi ficando no meu pensamento, no meu sorriso, nas minhas vontades e principalmente no meu coração.</p>
+        <p class="small-note">Esse cantinho é só uma forma simples de te lembrar o quanto você é especial pra mim e o quanto eu sou feliz por ter você na minha vida.</p>
+      </div>
+
+      <div class="cards-wrap glass timeline-box">
         <div class="cards-grid">
           <div class="card" data-card>
-            <div class="card-head"><span>O começo</span><span></span></div>
+            <div class="card-head"><span>01 • O começo</span><span></span></div>
             <p>Desde que você entrou na minha vida, muita coisa mudou. Os dias ficaram mais leves, os momentos simples passaram a ter mais valor e até as pequenas coisas ganharam um significado diferente, porque você trouxe amor, carinho e luz para perto de mim.</p>
           </div>
           <div class="card" data-card>
-            <div class="card-head"><span>O que eu sinto</span><span></span></div>
+            <div class="card-head"><span>02 • O que eu sinto</span><span></span></div>
             <p>Eu amo sua presença, seu jeito, sua voz, seu sorriso e tudo aquilo que faz você ser única. Estar com você me traz paz, alegria e uma vontade enorme de cuidar de nós, viver momentos lindos e te fazer feliz do jeito que você merece.</p>
           </div>
           <div class="card" data-card>
-            <div class="card-head"><span>O que eu quero</span><span></span></div>
+            <div class="card-head"><span>03 • O que eu quero</span><span></span></div>
             <p>Quero continuar vivendo a nossa história com calma, carinho e verdade. Quero estar ao seu lado nos dias bons e também nos difíceis, colecionando memórias, risos, abraços e momentos que a gente vai guardar pra sempre. Porque, no fim, o que eu mais quero é continuar escolhendo você todos os dias.</p>
           </div>
         </div>
@@ -697,8 +904,9 @@ section{
     </div>
   </section>
 
-  <section>
+  <section class="guide-section" id="capitulo-4">
     <div class="section-inner reveal-on-scroll">
+      <p class="chapter-pill">Capítulo 4 de 5</p>
       <div class="quote-box glass">
         <div class="quote-heart">
           <svg viewBox="0 0 46 42" fill="none" aria-hidden="true">
@@ -712,8 +920,9 @@ section{
     </div>
   </section>
 
-  <section class="final">
+  <section class="final guide-section" id="capitulo-5">
     <div class="section-inner reveal-on-scroll">
+      <p class="chapter-pill">Capítulo 5 de 5</p>
       <div class="final-box glass">
         <div class="final-heart">
           <svg viewBox="0 0 46 42" fill="none" aria-hidden="true">
@@ -882,6 +1091,7 @@ function openLetter(){
     letter.classList.add('reveal');
     window.scrollTo({top: 0, behavior: 'instant'});
     setupObservers();
+    updateProgress();
     setTimeout(() => overlay.classList.remove('on'), 220);
   }, 620);
 }
@@ -921,6 +1131,34 @@ setTimeout(() => {
     el.style.transform = 'none';
   });
 }, 900);
+
+
+const guideSections = () => Array.from(document.querySelectorAll('.guide-section'));
+
+function updateProgress(){
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const percent = total > 0 ? (window.scrollY / total) * 100 : 0;
+  const bar = document.getElementById('progress-bar');
+  if(bar) bar.style.width = Math.max(0, Math.min(100, percent)) + '%';
+
+  const btn = document.querySelector('.next-floating');
+  const letter = document.getElementById('screen-letter');
+  if(btn && letter && letter.classList.contains('reveal')){
+    const nearEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 140;
+    btn.style.display = nearEnd ? 'none' : 'block';
+  }
+}
+
+function goNextSection(){
+  const sections = guideSections();
+  const currentY = window.scrollY + window.innerHeight * 0.28;
+  const next = sections.find(sec => sec.offsetTop > currentY + 20);
+  if(next){
+    next.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+window.addEventListener('scroll', updateProgress, {passive:true});
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
