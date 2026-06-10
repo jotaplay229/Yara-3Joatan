@@ -801,15 +801,6 @@ section{
 
 
 /* Música ambiente */
-#music-player{
-  position:fixed;
-  width:1px;
-  height:1px;
-  left:-9999px;
-  top:-9999px;
-  opacity:0;
-  pointer-events:none;
-}
 .music-toggle{
   position:fixed;
   left:16px;
@@ -867,7 +858,7 @@ section{
 <div id="overlay"></div>
 
 <!-- Música ambiente: começa somente depois do clique no coração -->
-<div id="music-player" aria-hidden="true"></div>
+<audio id="bg-music" src="assets/musica.mp3" preload="auto" loop playsinline></audio>
 <button id="music-toggle" class="music-toggle" type="button" onclick="toggleMusic()">♪ música</button>
 
 <div id="screen-intro">
@@ -1185,61 +1176,47 @@ setTimeout(() => {
 
 
 
-let musicStarted = false;
 let musicPlaying = false;
-const youtubeMusicId = 'YQ-qToZUybM';
 
 function startMusic(){
-  const player = document.getElementById('music-player');
+  const audio = document.getElementById('bg-music');
   const toggle = document.getElementById('music-toggle');
-  if(!player) return;
+  if(!audio) return;
 
-  if(!musicStarted){
-    player.innerHTML = `<iframe
-      id="yt-music"
-      width="1"
-      height="1"
-      src="https://www.youtube.com/embed/${youtubeMusicId}?enablejsapi=1&autoplay=1&loop=1&playlist=${youtubeMusicId}&controls=0&playsinline=1&rel=0"
-      title="Música ambiente"
-      allow="autoplay; encrypted-media"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen></iframe>`;
-    musicStarted = true;
-    musicPlaying = true;
+  audio.volume = 0.42;
+
+  const playPromise = audio.play();
+
+  if(playPromise !== undefined){
+    playPromise.then(() => {
+      musicPlaying = true;
+      if(toggle){
+        toggle.classList.add('show','playing');
+        toggle.textContent = '♪ tocando';
+      }
+    }).catch(() => {
+      musicPlaying = false;
+      if(toggle){
+        toggle.classList.add('show');
+        toggle.classList.remove('playing');
+        toggle.textContent = '♪ tocar música';
+      }
+    });
   }else{
-    playMusic();
-  }
-
-  if(toggle){
-    toggle.classList.add('show','playing');
-    toggle.textContent = '♪ tocando';
-  }
-}
-
-function ytCommand(command){
-  const iframe = document.getElementById('yt-music');
-  if(!iframe || !iframe.contentWindow) return;
-  iframe.contentWindow.postMessage(JSON.stringify({
-    event:'command',
-    func:command,
-    args:[]
-  }), '*');
-}
-
-function playMusic(){
-  ytCommand('playVideo');
-  musicPlaying = true;
-  const toggle = document.getElementById('music-toggle');
-  if(toggle){
-    toggle.classList.add('playing','show');
-    toggle.textContent = '♪ tocando';
+    musicPlaying = true;
+    if(toggle){
+      toggle.classList.add('show','playing');
+      toggle.textContent = '♪ tocando';
+    }
   }
 }
 
 function pauseMusic(){
-  ytCommand('pauseVideo');
-  musicPlaying = false;
+  const audio = document.getElementById('bg-music');
   const toggle = document.getElementById('music-toggle');
+  if(audio) audio.pause();
+
+  musicPlaying = false;
   if(toggle){
     toggle.classList.remove('playing');
     toggle.classList.add('show');
@@ -1248,14 +1225,10 @@ function pauseMusic(){
 }
 
 function toggleMusic(){
-  if(!musicStarted){
-    startMusic();
-    return;
-  }
   if(musicPlaying){
     pauseMusic();
   }else{
-    playMusic();
+    startMusic();
   }
 }
 
