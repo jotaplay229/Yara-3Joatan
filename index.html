@@ -799,6 +799,54 @@ section{
   }
 }
 
+
+/* Música ambiente */
+#music-player{
+  position:fixed;
+  width:1px;
+  height:1px;
+  left:-9999px;
+  top:-9999px;
+  opacity:0;
+  pointer-events:none;
+}
+.music-toggle{
+  position:fixed;
+  left:16px;
+  bottom:16px;
+  z-index:75;
+  display:none;
+  border:1px solid rgba(255,120,120,.26);
+  background:rgba(12,9,10,.58);
+  color:#fff;
+  border-radius:999px;
+  padding:.72rem .95rem;
+  font-family:'Cormorant Garamond', serif;
+  font-size:.95rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  box-shadow:0 12px 32px rgba(0,0,0,.28), 0 0 20px rgba(255,95,115,.12);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  cursor:pointer;
+}
+.music-toggle.show{
+  display:block;
+}
+.music-toggle.playing{
+  border-color:rgba(255,120,120,.44);
+  background:linear-gradient(135deg, rgba(217,65,54,.70), rgba(255,95,115,.42));
+}
+@media (max-width:560px){
+  .music-toggle{
+    left:12px;
+    bottom:12px;
+    padding:.68rem .82rem;
+    font-size:.82rem;
+    letter-spacing:.08em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce){
   *{transition:none !important; scroll-behavior:auto !important}
   .intro-date,.intro-title,.intro-sub,.sparkles,.heart-launch,.hero-badge,.hero-title,.hero-text,.scroll-tag,.reveal-on-scroll,.card{
@@ -817,6 +865,10 @@ section{
 <body>
 <canvas id="bg-canvas"></canvas>
 <div id="overlay"></div>
+
+<!-- Música ambiente: começa somente depois do clique no coração -->
+<div id="music-player" aria-hidden="true"></div>
+<button id="music-toggle" class="music-toggle" type="button" onclick="toggleMusic()">♪ música</button>
 
 <div id="screen-intro">
   <div class="intro-shell">
@@ -1076,6 +1128,7 @@ function animateBackground(){
 }
 
 function openLetter(){
+  startMusic();
   const overlay = document.getElementById('overlay');
   const intro = document.getElementById('screen-intro');
   const letter = document.getElementById('screen-letter');
@@ -1130,6 +1183,81 @@ setTimeout(() => {
   });
 }, 900);
 
+
+
+let musicStarted = false;
+let musicPlaying = false;
+const youtubeMusicId = 'YQ-qToZUybM';
+
+function startMusic(){
+  const player = document.getElementById('music-player');
+  const toggle = document.getElementById('music-toggle');
+  if(!player) return;
+
+  if(!musicStarted){
+    player.innerHTML = `<iframe
+      id="yt-music"
+      width="1"
+      height="1"
+      src="https://www.youtube.com/embed/${youtubeMusicId}?enablejsapi=1&autoplay=1&loop=1&playlist=${youtubeMusicId}&controls=0&playsinline=1&rel=0"
+      title="Música ambiente"
+      allow="autoplay; encrypted-media"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen></iframe>`;
+    musicStarted = true;
+    musicPlaying = true;
+  }else{
+    playMusic();
+  }
+
+  if(toggle){
+    toggle.classList.add('show','playing');
+    toggle.textContent = '♪ tocando';
+  }
+}
+
+function ytCommand(command){
+  const iframe = document.getElementById('yt-music');
+  if(!iframe || !iframe.contentWindow) return;
+  iframe.contentWindow.postMessage(JSON.stringify({
+    event:'command',
+    func:command,
+    args:[]
+  }), '*');
+}
+
+function playMusic(){
+  ytCommand('playVideo');
+  musicPlaying = true;
+  const toggle = document.getElementById('music-toggle');
+  if(toggle){
+    toggle.classList.add('playing','show');
+    toggle.textContent = '♪ tocando';
+  }
+}
+
+function pauseMusic(){
+  ytCommand('pauseVideo');
+  musicPlaying = false;
+  const toggle = document.getElementById('music-toggle');
+  if(toggle){
+    toggle.classList.remove('playing');
+    toggle.classList.add('show');
+    toggle.textContent = '♪ música';
+  }
+}
+
+function toggleMusic(){
+  if(!musicStarted){
+    startMusic();
+    return;
+  }
+  if(musicPlaying){
+    pauseMusic();
+  }else{
+    playMusic();
+  }
+}
 
 const guideSections = () => Array.from(document.querySelectorAll('.guide-section'));
 
